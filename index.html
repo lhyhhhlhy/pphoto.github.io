@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>图片画廊</title>
+<style>
+  .gallery-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px; /* 缩小间隔 */
+    justify-content: center;
+  }
+
+  .gallery-item {
+    border: 1px solid #ddd; /* 细化边框 */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* 减弱阴影效果 */
+    transition: transform 0.2s;
+    cursor: pointer;
+  }
+
+  .gallery-item:hover {
+    transform: scale(1.05);
+  }
+
+  .gallery-item img {
+    width: 100px; /* 减小缩略图宽度 */
+    height: auto;
+  }
+
+  .selected-image-container {
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .selected-image {
+    max-width: 80%;
+    height: auto;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+</style>
+</head>
+<body>
+
+<div class="selected-image-container" id="selectedImageContainer">
+  <!-- 选中的图片将在这里显示 -->
+</div>
+
+<div class="gallery-container" id="galleryContainer">
+  <div class="gallery-item">
+    <img src="images/image1.jpg" alt="图片1">
+  </div>
+  <div class="gallery-item">
+    <img src="images/image2.jpg" alt="图片2">
+  </div>
+  <div class="gallery-item">
+    <img src="images/image3.jpg" alt="图片3">
+  </div>
+  <div class="gallery-item">
+    <img src="images/image4.jpg" alt="图片4">
+  </div>
+</div>
+
+<script>
+  // 获取所有画廊项目
+  const galleryItems = document.querySelectorAll('.gallery-item img');
+  // 获取选中的图片容器
+  const selectedImageContainer = document.getElementById('selectedImageContainer');
+
+  // 为每个画廊项目添加点击事件
+  galleryItems.forEach(item => {
+    item.addEventListener('click', function() {
+      // 清空当前选中的图片容器
+      selectedImageContainer.innerHTML = '';
+      // 创建一个新的图片元素
+      const newImage = document.createElement('img');
+      newImage.src = this.src;
+      newImage.alt = this.alt;
+      newImage.classList.add('selected-image');
+      // 将新图片添加到选中的图片容器中
+      selectedImageContainer.appendChild(newImage);
+    });
+  });
+
+  // 默认显示第一个图片
+  document.addEventListener('DOMContentLoaded', function() {
+    if (galleryItems.length > 0) {
+      const firstImage = galleryItems[0];
+      firstImage.click();
+    }
+  });
+</script>
+
+</body>
+</html>
